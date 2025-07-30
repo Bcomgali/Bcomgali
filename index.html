@@ -36,6 +36,94 @@ function toggleMenu() {
 </script>
 
 <!DOCTYPE html>
+<html>
+<head>
+  <title>BCOMGALI</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }.navbar {
+      background: #3498db; color:#fff; padding:10px; display:flex; gap:20px;
+    }.navbar a { color:#fff; text-decoration:none; font-weight:bold; }.container { max-width:700px; margin:30px auto; padding:20px; background:#f2f2f2; border-radius:8px; }.section { margin-bottom:25px; }
+    select, button { margin:8px; padding:7px 14px; }
+    footer { margin-top:40px; padding:12px; background:#ddd; text-align:center; border-radius:0 0 8px 8px; }.links { margin:10px 0;}.links a { margin:0 10px; color:#333; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="#">Home</a>
+    <a href="#">Assignments</a>
+  </nav>
+
+  <div class="container">
+    <h2>Welcome to BCOMGALI</h2>
+    <div class="section">
+      <label><b>Select Year:</b></label>
+      <select id="year">
+        <option value="">-- Year --</option>
+        <option value="1">1st Year</option>
+        <option value="2">2nd Year</option>
+        <option value="3">3rd Year</option>
+      </select>
+    </div>
+    <div class="section">
+      <label><b>Select Medium:</b></label>
+      <select id="medium">
+        <option value="">-- Medium --</option>
+        <option value="hindi">Hindi</option>
+        <option value="english">English</option>
+      </select>
+    </div>
+    <div class="section">
+      <label><b>Select Session:</b></label>
+      <select id="session">
+        <option value="">-- Session --</option>
+        <option value="2024-25">2024-25</option>
+        <option value="2025-26">2025-26</option>
+      </select>
+    </div>
+    <div class="section">
+      <label><b>Select Subject:</b></label>
+      <select id="subject">
+        <option value="">-- Subject --</option>
+        <option value="BCOC-135">BCOC-135</option>
+        <option value="BCOC-136">BCOC-136</option>
+        <!-- Aur subjects add kar sakte ho -->
+      </select>
+    </div>
+    <button onclick="showAssignment()">Show Assignment</button>
+    <div id="result" style="margin-top:20px; font-weight:bold; color:#298f3d;"></div>
+  </div>
+
+  <footer>
+    <div class="links">
+      <a href="#">Privacy Policy</a>|<a href="#">Disclaimer</a>|<a href="#">About Us</a>|<a href="#">Features</a>
+    </div>
+    <div>
+      © 2025 BCOMGALI
+    </div>
+  </footer>
+
+  <script>
+    function showAssignment() {
+      let year = document.getElementById('year').value;
+      let medium = document.getElementById('medium').value;
+      let session = document.getElementById('session').value;
+      let subject = document.getElementById('subject').value;
+
+      if (year && medium && session && subject) {
+        document.getElementById('result').innerText = 
+        `Assignments for ${year} Year, ${medium.charAt(0).toUpperCase() + medium.slice(1)} Medium, Session ${session}, Subject ${subject} will appear here.`;
+      } else {
+        document.getElementById('result').innerText = "Please select all fields!";
+      }
+    }
+  </script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
