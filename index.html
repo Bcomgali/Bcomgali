@@ -98,17 +98,19 @@ function toggleMenu() {
     <div id="result" style="margin-top:20px; font-weight:bold; color:#298f3d;"></div>
   </div>
 
-<select id="subject" onchange="showAssignment()">
-  <option value="">-- Select Subject --</option>
-  <option value="BCOC-135">BCOC-135</option>
-  <option value="BCOC-136">BCOC-136</option>
-  <option value="BCOC-137">BCOC-137</option>
-  <option value="BCOC-138">BCOC-138</option>
-  <option value="BCOS-183">BCOS-183</option>
-  <option value="BCOS-184">BCOS-184</option>
-  <option value="BHDLA-137">BHDLA-137</option>
-  <option value="BCOLA-138">BCOLA-138</option>
-</select>
+button onclick="showBCOS183()">BCOS-183 Assignment</button>
+<div id="bcos183"></div>
+
+<script>
+function showBCOS183() {
+  document.getElementById('bcos183').innerHTML = `
+    <b>BCOS-183 Assignment PDF:</b><br>
+    <iframe src="https://drive.google.com/file/d/1dZLUOXJu1uHv8_fCO4GIcrSHWJZMaeso/preview" width="100%" height="500"></iframe>
+    <br>
+    <a href="https://drive.google.com/file/d/1dZLUOXJu1uHv8_fCO4GIcrSHWJZMaeso/view?usp=drivesdk" target="_blank">Download PDF</a>
+  `;
+}
+</script>
 
 <div id="assignment"></div>
 
