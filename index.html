@@ -98,9 +98,38 @@ function toggleMenu() {
     <div id="result" style="margin-top:20px; font-weight:bold; color:#298f3d;"></div>
   </div>
 
-  <a href="https://drive.google.com/file/d/1dZLUOXJu1uHv8_fCO4GIcrSHWJZMaeso/view?usp=drivesdk" target="_blank">
-  Download BCOS-183 Assignment PDF
-</a>
+<select id="subject" onchange="showAssignment()">
+  <option value="">-- Select Subject --</option>
+  <option value="BCOC-135">BCOC-135</option>
+  <option value="BCOC-136">BCOC-136</option>
+  <option value="BCOC-137">BCOC-137</option>
+  <option value="BCOC-138">BCOC-138</option>
+  <option value="BCOS-183">BCOS-183</option>
+  <option value="BCOS-184">BCOS-184</option>
+  <option value="BHDLA-137">BHDLA-137</option>
+  <option value="BCOLA-138">BCOLA-138</option>
+</select>
+
+<div id="assignment"></div>
+
+<script>
+const gdriveLink = "https://drive.google.com/file/d/1dZLUOXJu1uHv8_fCO4GIcrSHWJZMaeso/view?usp=drivesdk";
+const embedLink = "https://drive.google.com/file/d/1dZLUOXJu1uHv8_fCO4GIcrSHWJZMaeso/preview";
+
+function showAssignment() {
+  let subject = document.getElementById('subject').value;
+  if(subject) {
+    document.getElementById('assignment').innerHTML = `
+      <b>${subject} Assignment:</b><br>
+      <a href="${gdriveLink}" target="_blank">Download PDF</a>
+      <br>
+      <iframe src="${embedLink}" width="100%" height="400"></iframe>
+    `;
+  } else {
+    document.getElementById('assignment').innerHTML = "";
+  }
+}
+</script>
 
   <footer>
     <div class="links">
