@@ -318,204 +318,7 @@
         </details>
         <details class="group py-4">
           <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span class="font-semibold">New session aane par kaise update karun?</span>
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-sm text-slate-700">Bas naya PDF upload karo aur link replace kar do. Title me session mention karna mat bhoolna (jaise <em>Jan 2025</em>).</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact / Footer -->
-  <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="bg-white rounded-2xl border border-slate-200 p-6">
-      <h3 class="text-xl font-extrabold">Contact</h3>
-      <p class="mt-2 text-sm text-slate-700">Email: <a href="mailto:bcomstreet@gmail.com" class="text-sky-700 hover:underline">bcomstreet@gmail.com</a> • WhatsApp: <span class="font-semibold">+91-00000-00000</span></p>
-      <p class="mt-2 text-xs text-slate-500">Disclaimer: This is a student community project. Not affiliated with IGNOU.</p>
-    </div>
-  </section>
-
-  <footer class="py-10 text-center text-sm text-slate-600">
-    © <span id="year"></span> Bcomstreet • Made with ❤ for IGNOU BCOMG students
-  </footer>
-
-  <script>
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Search + Filter logic
-    const search = document.getElementById('search');
-    const semesterFilter = document.getElementById('semesterFilter');
-    const cards = Array.from(document.querySelectorAll('#cards article'
-
-
-
-     <!doctype html>
-
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IGNOU Solved Assignments - Demo</title>
-  <style>
-    :root{--accent:#2b6cb0;--muted:#666}
-    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0;padding:20px;background:#f7f9fc;color:#111}
-    header{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-    h1{margin:0 0 8px 0;font-size:20px}
-    .controls{display:flex;gap:8px;flex-wrap:wrap}
-    select,input[type=text]{padding:8px;border:1px solid #d7dde6;border-radius:6px}
-    label{font-size:13px;color:var(--muted)}
-    .chip{background:#fff;border:1px solid #e3e8ef;padding:8px;border-radius:8px}
-    table{width:100%;border-collapse:collapse;margin-top:18px;background:#fff;border-radius:8px;overflow:hidden}
-    th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #f1f5f9}
-    th{background:#fff;font-weight:600}
-    .actions{display:flex;gap:8px}
-    .btn{padding:8px 10px;border-radius:6px;border:none;background:var(--accent);color:white;cursor:pointer}
-    .btn.secondary{background:#4a5568}
-    .small{padding:6px 8px;font-size:13px}
-    .muted{color:var(--muted);font-size:13px}
-    @media (max-width:700px){table,thead,tbody,tr,th,td{display:block}thead{display:none}tr{margin-bottom:12px;border-radius:8px;border:1px solid #e6eef8;padding:8px}td{border:none;padding:6px 2px}}
-  </style>
-</head>
-<body>
-  <header>
-    <div>
-      <h1>IGNOU Solved Assignments — Demo</h1>
-      <div class="muted">Session / Medium ke hisaab se assignments filter karein. (Static demo — GitHub Pages par seedha host karein)</div>
-    </div>
-  </header>  <section style="margin-top:14px" class="chip">
-    <div class="controls">
-      <div>
-        <label>Session</label><br>
-        <select id="sessionSelect">
-          <option value="all">All</option>
-        </select>
-      </div>
-      <div>
-        <label>Medium</label><br>
-        <select id="mediumSelect">
-          <option value="all">All</option>
-          <option value="hindi">Hindi</option>
-          <option value="english">English</option>
-        </select>
-      </div>
-      <div>
-        <label>Search (code / title)</label><br>
-        <input id="search" type="text" placeholder="Bcom 131, financial accounting..." />
-      </div>
-      <div style="align-self:end">
-        <button class="btn small" id="addBtn">+ Add / Edit</button>
-      </div>
-      <div style="align-self:end">
-        <button class="btn small secondary" id="exportBtn">Export JSON</button>
-      </div>
-    </div>
-  </section>  <main>
-    <table id="coursesTable">
-      <thead>
-        <tr><th>Code</th><th>Title</th><th>Session</th><th>Medium</th><th>File</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </main>  <!-- modal (simple) -->  <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);align-items:center;justify-content:center">
-    <div style="background:#fff;padding:18px;border-radius:10px;width:min(520px,95%);box-shadow:0 8px 30px rgba(0,0,0,0.12)">
-      <h3 style="margin-top:0">Add / Edit Assignment</h3>
-      <div style="display:grid;gap:8px">
-        <input id="m_code" placeholder="Course code (eg. BCOC 131)" />
-        <input id="m_title" placeholder="Course title" />
-        <input id="m_session" placeholder="Session (eg. 2024-25)" />
-        <select id="m_medium"><option value="hindi">Hindi</option><option value="english">English</option></select>
-        <input id="m_url" placeholder="File URL (optional) - paste GitHub raw link or any PDF link" />
-        <div style="display:flex;gap:8px;justify-content:flex-end">
-          <button class="btn secondary" id="cancel">Cancel</button>
-          <button class="btn" id="save">Save</button>
-        </div>
-      </div>
-    </div>
-  </div>  <script>
-    // Sample initial data (based on your photo)
-    const sample = [
-      {code:'BCOC 131', title:'Financial Accounting', session:'2024-25', medium:'hindi', url:''},
-      {code:'BCOC 132', title:'Business Organisation & Management', session:'2024-25', medium:'hindi', url:''},
-      {code:'BCOC 133', title:'Business Law', session:'2024-25', medium:'hindi', url:''},
-      {code:'BCOC 134', title:'Business Statistics & Mathematics', session:'2024-25', medium:'hindi', url:''},
-      {code:'BEGAE 182', title:'(Sample) English elective', session:'2024-25', medium:'hindi', url:''},
-      {code:'BECOLA 135', title:'(Sample) Course 135', session:'2024-25', medium:'hindi', url:''},
-      {code:'BA VAE 181', title:'(Sample) VAE', session:'2024-25', medium:'hindi', url:''},
-      {code:'BHDLA 136', title:'(Sample) Course 136', session:'2024-25', medium:'hindi', url:''}
-    ];
-
-    // load from localStorage or use sample
-    const STORAGE_KEY = 'ignou_assignments_v1';
-    let assignments = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || sample;
-
-    const sessionSelect = document.getElementById('sessionSelect');
-    const mediumSelect = document.getElementById('mediumSelect');
-    const search = document.getElementById('search');
-    const tbody = document.querySelector('#coursesTable tbody');
-
-    function uniqueSessions(){
-      const s = Array.from(new Set(assignments.map(a=>a.session))).sort();
-      return s;
-    }
-
-    function rebuildSessionOptions(){
-      const cur = sessionSelect.value;
-      sessionSelect.innerHTML = '<option value="all">All</option>' + uniqueSessions().map(x=>`<option value="${x}">${x}</option>`).join('');
-      if([...sessionSelect.options].some(o=>o.value===cur)) sessionSelect.value = cur;
-    }
-
-    function render(){
-      rebuildSessionOptions();
-      const q = search.value.trim().toLowerCase();
-      const s = sessionSelect.value;
-      const m = mediumSelect.value;
-      tbody.innerHTML = '';
-      const filtered = assignments.filter(item=>{
-        if(s!=='all' && item.session!==s) return false;
-        if(m!=='all' && item.medium!==m) return false;
-        if(!q) return true;
-        return (item.code + ' ' + item.title).toLowerCase().includes(q);
-      });
-      if(filtered.length===0){
-        tbody.innerHTML = '<tr><td colspan="5" class="muted">Koi assignment nahi mila.</td></tr>';
-        return;
-      }
-      for(const a of filtered){
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${a.code}</td><td>${a.title}</td><td>${a.session}</td><td>${a.medium}</td>`;
-        const td = document.createElement('td');
-        const actions = document.createElement('div'); actions.className='actions';
-        if(a.url){
-          const link = document.createElement('a'); link.href = a.url; link.target='_blank'; link.className='btn small'; link.textContent='Open';
-          actions.appendChild(link);
-        } else {
-          const no = document.createElement('span'); no.textContent='No file'; no.className='muted small'; actions.appendChild(no);
-        }
-        const edit = document.createElement('button'); edit.className='btn small secondary'; edit.textContent='Edit';
-        edit.addEventListener('click',()=> openModal(a));
-        actions.appendChild(edit);
-        td.appendChild(actions);
-        tr.appendChild(td);
-        tbody.appendChild(tr);
-      }
-    }
-
-    // modal handling
-    const modal = document.getElementById('modal');
-    const addBtn = document.getElementById('addBtn');
-    const cancel = document.getElementById('cancel');
-    const save = document.getElementById('save');
-    const m_code = document.getElementById('m_code');
-    const m_title = document.getElementById('m_title');
-    const m_session = document.getElementById('m_session');
-    const m_medium = document.getElementById('m_medium');
-    const m_url = document.getElementById('m_url');
-    let editing = null;
-
-    function openModal(item){
-      modal.style.display='flex';
+            <span class="font   modal.style.display='flex';
       if(item){
         editing = item;
         m_code.value = item.code; m_title.value = item.title; m_session.value = item.session; m_medium.value = item.medium; m_url.value = item.url || '';
@@ -559,3 +362,94 @@
     render();
   </script></body>
 </html>                                                  
+
+
+
+
+
+              <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bcomgali - IGNOU B.Com Solved Assignments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav {
+            background-color: #34495e;
+            display: flex;
+            justify-content: center;
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #1abc9c;
+        }
+        .container {
+            padding: 20px;
+        }
+        .assignment {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Bcomgali</h1>
+    <p>IGNOU B.Com Solved Assignments</p>
+</header>
+
+<nav>
+    <a href="#">Home</a>
+    <a href="#">Assignments</a>
+    <a href="#">Contact</a>
+</nav>
+
+<div class="container">
+    <div class="assignment">
+        <h2>BCOC 131 - Business Organisation and Management</h2>
+        <p><a href="assignments/bcoc131.pdf" target="_blank">Download Solved Assignment</a></p>
+    </div>
+    <div class="assignment">
+        <h2>BCOC 132 - Business Law</h2>
+        <p><a href="assignments/bcoc132.pdf" target="_blank">Download Solved Assignment</a></p>
+    </div>
+    <div class="assignment">
+        <h2>BCOC 133 - Business Mathematics and Statistics</h2>
+        <p><a href="assignments/bcoc133.pdf" target="_blank">Download Solved Assignment</a></p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Bcomgali | Made with ❤️ for IGNOU Students</p>
+</footer>
+
+</body>
+            </html>
+              
