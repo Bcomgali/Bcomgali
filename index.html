@@ -2,454 +2,212 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bcomstreet • IGNOU BCOMG Solved Assignments (Free)</title>
-  <meta name="description" content="Bcomstreet: Free solved assignments for IGNOU BCOMG students. Download course-wise PDFs, previous year question papers, and study resources — 100% free forever." />
-  <meta property="og:title" content="Bcomstreet • IGNOU BCOMG Solved Assignments (Free)" />
-  <meta property="og:description" content="Free solved assignments for IGNOU BCOMG students — download by course or semester." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#0ea5e9" />
-
-  <!-- Tailwind CSS CDN (easy + free). For production performance, you can prebuild later. -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica", "Arial", "Noto Sans", "sans-serif"],
-          }
-        }
-      }
-    }
-  </script>
-
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IGNOU BCom Solved Assignments</title>
+  <meta name="description" content="Solved assignments for IGNOU BCom students. Search, filter and download PDFs." />
   <style>
-    /* Smooth hover lift for cards */
-    .lift { transition: transform .2s ease, box-shadow .2s ease; }
-    .lift:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(2,6,23,.15); }
-    /* Hide section while filtering */
-    .hidden-by-filter { display: none !important; }
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#7dd3fc;--glass: rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial; margin:0; background:linear-gradient(180deg,#071024 0%, #081429 100%); color:#e6eef6;}
+    .wrap{max-width:1100px;margin:32px auto;padding:20px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    h1{margin:0;font-size:20px}
+    .subtitle{color:var(--muted);font-size:13px}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .search{flex:1;min-width:220px}
+    input,select,textarea,button{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:10px;color:inherit}
+    input::placeholder{color:var(--muted)}
+    button.primary{background:linear-gradient(90deg,#0ea5e9,#60a5fa);color:#052024;border:none}
+    .filters{display:flex;gap:8px;align-items:center}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);}
+    .meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .course{font-weight:700}
+    .small{font-size:13px;color:var(--muted)}
+    .actions{display:flex;gap:8px;margin-top:10px}
+    a.btn{display:inline-block;padding:8px 10px;border-radius:8px;text-decoration:none;font-size:14px}
+    a.download{background:rgba(125,211,252,0.12);border:1px solid rgba(125,211,252,0.18)}
+    a.view{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.03)}
+    .tag{display:inline-block;padding:6px 8px;border-radius:999px;font-size:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);}
+    .empty{padding:40px;text-align:center;color:var(--muted)}
+    footer{margin-top:28px;color:var(--muted);font-size:13px}
+    /* admin modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.85));}
+    .modal.open{display:flex}
+    .modal-card{background:#071426;padding:16px;border-radius:12px;max-width:900px;width:94%;border:1px solid rgba(255,255,255,0.03)}
+    textarea.json{width:100%;height:300px;background:#021026;border-radius:8px;padding:12px;color:#cfeeff;font-family:monospace}
+    .hint{color:var(--muted);font-size:13px}
+    @media (max-width:520px){header{flex-direction:column;align-items:flex-start} .controls{flex-direction:column}}
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-display">
-  <!-- Announcement bar -->
-  <div class="w-full bg-sky-600 text-white text-center text-sm py-2 px-3">
-    🎉 Bcomstreet is 100% free — no login, no paywall. Save this link: <span class="font-semibold">bcomstreet.github.io</span> (example).
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>IGNOU BCom Solved Assignments</h1>
+        <div class="subtitle">Search, filter and download solved assignments — hosted on GitHub Pages</div>
+      </div>
+      <div style="text-align:right">
+        <div class="small">Built for: IGNOU BCom students</div>
+        <button id="adminBtn" class="primary" style="margin-top:8px">Admin: Paste JSON</button>
+      </div>
+    </header>
+
+    <div class="controls">
+      <input id="search" class="search" placeholder="Search by course code, title or description (e.g., 'BCOM', 'BEGE-101')" />
+      <div class="filters">
+        <select id="filterCourse"><option value="">All courses</option></select>
+        <select id="filterSession"><option value="">All sessions</option></select>
+        <select id="filterYear"><option value="">All years</option></select>
+        <button id="clearFilters">Clear</button>
+      </div>
+    </div>
+
+    <div id="list" class="grid"></div>
+    <div id="empty" class="empty" style="display:none">No assignments found. Try different search terms or filters.</div>
+
+    <footer>
+      <div>Tip: To add assignment PDFs, upload them to <code>assets/</code> in your GitHub repo and set the <code>file</code> URL accordingly in the JSON.</div>
+    </footer>
   </div>
 
-  <!-- Header -->
-  <header class="sticky top-0 z-40 backdrop-blur bg-white/80 border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-      <a href="#" class="flex items-center gap-2">
-        <div class="w-9 h-9 rounded-2xl bg-sky-500 grid place-items-center text-white text-lg font-bold">B</div>
-        <div>
-          <p class="text-xl font-extrabold tracking-tight">Bcomstreet</p>
-          <p class="text-xs -mt-1 text-slate-500">IGNOU BCOMG Resources</p>
-        </div>
-      </a>
-      <nav class="hidden md:flex items-center gap-6 text-sm">
-        <a href="#assignments" class="hover:text-sky-600">Assignments</a>
-        <a href="#papers" class="hover:text-sky-600">Question Papers</a>
-        <a href="#faqs" class="hover:text-sky-600">FAQs</a>
-        <a href="#contact" class="hover:text-sky-600">Contact</a>
-      </nav>
-      <a href="#contribute" class="px-3 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold lift">Contribute</a>
-    </div>
-  </header>
-
-  <!-- Hero -->
-  <section class="bg-gradient-to-b from-white to-sky-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 grid lg:grid-cols-2 gap-10 items-center">
-      <div>
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
-          IGNOU <span class="text-sky-600">BCOMG</span> Solved Assignments — <span class="whitespace-nowrap">Free Forever</span>
-        </h1>
-        <p class="mt-4 text-slate-600 text-base sm:text-lg">Download semester‑wise, course‑wise solved assignments and previous year papers. Clean, fast, and always free.</p>
-
-        <!-- Search -->
-        <div class="mt-6 flex items-center gap-3">
-          <div class="flex-1">
-            <label for="search" class="sr-only">Search courses</label>
-            <input id="search" type="text" placeholder="Search e.g., BCOC-131, Business Organization…" class="w-full rounded-2xl border border-slate-300 bg-white/70 px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500" />
-          </div>
-          <select id="semesterFilter" class="rounded-2xl border border-slate-300 bg-white/70 px-3 py-3 outline-none focus:ring-2 focus:ring-sky-500">
-            <option value="all">All Semesters</option>
-            <option value="sem1">Semester 1</option>
-            <option value="sem2">Semester 2</option>
-            <option value="sem3">Semester 3</option>
-            <option value="sem4">Semester 4</option>
-            <option value="sem5">Semester 5</option>
-            <option value="sem6">Semester 6</option>
-          </select>
-        </div>
-        <p class="mt-2 text-xs text-slate-500">Tip: Type part of a course code or title to filter instantly.</p>
+  <!-- Admin modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <h3>Admin: Paste assignments JSON</h3>
+      <div class="hint">Paste a JSON array of assignment objects. This updates the site in your browser (client-side). To make permanent, commit changes to index.html or host a separate assignments.json.
       </div>
-
-      <div class="relative">
-        <div class="absolute -inset-4 bg-sky-100/60 blur-2xl rounded-3xl"></div>
-        <div class="relative bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
-          <ul class="space-y-3 text-sm">
-            <li class="flex items-center gap-3"><span class="w-6 h-6 rounded-lg bg-sky-100 grid place-items-center">✅</span> Free downloads — no sign‑up</li>
-            <li class="flex items-center gap-3"><span class="w-6 h-6 rounded-lg bg-sky-100 grid place-items-center">📚</span> Semester & course filters</li>
-            <li class="flex items-center gap-3"><span class="w-6 h-6 rounded-lg bg-sky-100 grid place-items-center">🔎</span> Fast search by code/title</li>
-            <li class="flex items-center gap-3"><span class="w-6 h-6 rounded-lg bg-sky-100 grid place-items-center">🗂️</span> Previous year papers</li>
-            <li class="flex items-center gap-3"><span class="w-6 h-6 rounded-lg bg-sky-100 grid place-items-center">🧩</span> Mobile friendly UI</li>
-          </ul>
-        </div>
+      <textarea id="jsonInput" class="json" placeholder='[ {"id": "1","title":"...","course":"BEGC-101","year":"2024","session":"Jan-Jun 2024","description":"...","file":"assets/BEGC-101-Jan2024.pdf","preview": "https://example.com/preview.png"} ]'></textarea>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+        <button id="closeModal">Close</button>
+        <button id="loadJson" class="primary">Load JSON</button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Assignments Grid -->
-  <section id="assignments" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="flex items-end justify-between gap-4">
-      <div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold">Solved Assignments</h2>
-        <p class="text-slate-600 mt-1">Click download to get the latest PDF. Replace links with your own Google Drive/Direct URLs.</p>
-      </div>
-      <a href="#howto" class="text-sm text-sky-700 hover:underline">How to add more courses →</a>
-    </div>
+  <script>
+    // Default sample assignments
+    let assignments = [
+      {
+        id: "B1",
+        title: "BEGE-101 - Solved Assignment (Jan 2024)",
+        course: "BEGE-101",
+        year: "2024",
+        session: "Jan-Jun 2024",
+        description: "Solved answers for BEGE-101 English course - IGNOU BCom.",
+        file: "assets/BEGE-101-Jan2024.pdf",
+        preview: ""
+      },
+      {
+        id: "B2",
+        title: "BCOM-101 - Solved Assignment (Jul 2023)",
+        course: "BCOM-101",
+        year: "2023",
+        session: "Jul-Dec 2023",
+        description: "Solved assignment covering unit 1-4.",
+        file: "assets/BCOM-101-Jul2023.pdf",
+        preview: ""
+      }
+    ];
 
-    <!-- Cards: sample data (edit/duplicate blocks as needed) -->
-    <div id="cards" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      <!-- Card template (copy & update data-* attrs) -->
-      <article class="lift bg-white border border-slate-200 rounded-2xl p-5" data-semester="sem1" data-code="BCOC-131" data-title="Business Organization and Management">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-xs uppercase tracking-wide text-slate-500">Semester 1</p>
-            <h3 class="mt-1 text-lg font-bold">BCOC-131 • Business Organization & Management</h3>
+    // Utility: render filters and list
+    const listEl = document.getElementById('list');
+    const emptyEl = document.getElementById('empty');
+    const searchEl = document.getElementById('search');
+    const fCourse = document.getElementById('filterCourse');
+    const fSession = document.getElementById('filterSession');
+    const fYear = document.getElementById('filterYear');
+
+    function unique(vals){return [...new Set(vals)].sort()}
+
+    function populateFilters(){
+      const courses = unique(assignments.map(a=>a.course).filter(Boolean));
+      const sessions = unique(assignments.map(a=>a.session).filter(Boolean));
+      const years = unique(assignments.map(a=>a.year).filter(Boolean));
+      fCourse.innerHTML = '<option value="">All courses</option>' + courses.map(c=>`<option value="${c}">${c}</option>`).join('');
+      fSession.innerHTML = '<option value="">All sessions</option>' + sessions.map(s=>`<option value="${s}">${s}</option>`).join('');
+      fYear.innerHTML = '<option value="">All years</option>' + years.map(y=>`<option value="${y}">${y}</option>`).join('');
+    }
+
+    function renderList(){
+      const q = searchEl.value.trim().toLowerCase();
+      const cf = fCourse.value; const sf = fSession.value; const yf = fYear.value;
+      const filtered = assignments.filter(a=>{
+        if(cf && a.course !== cf) return false;
+        if(sf && a.session !== sf) return false;
+        if(yf && a.year !== yf) return false;
+        if(!q) return true;
+        return (a.title||'').toLowerCase().includes(q) || (a.course||'').toLowerCase().includes(q) || (a.description||'').toLowerCase().includes(q) || (a.year||'').toLowerCase().includes(q);
+      });
+      listEl.innerHTML = '';
+      if(filtered.length === 0){ emptyEl.style.display='block'; return } else { emptyEl.style.display='none' }
+      for(const a of filtered){
+        const card = document.createElement('div'); card.className='card';
+        card.innerHTML = `
+          <div class="meta">
+            <div>
+              <div class="course">${escapeHtml(a.course||'Unknown')}</div>
+              <div class="small">${escapeHtml(a.title||'Untitled')}</div>
+            </div>
+            <div style="text-align:right">
+              <div class="tag">${escapeHtml(a.session||'')}</div>
+              <div class="small">${escapeHtml(a.year||'')}</div>
+            </div>
           </div>
-          <span class="text-xs px-2 py-1 rounded-full bg-sky-100 text-sky-700">Core</span>
-        </div>
-        <p class="mt-2 text-sm text-slate-600">Solved assignment PDF for BCOC-131 (latest session). </p>
-        <div class="mt-4 flex items-center gap-3">
-          <a href="#" class="px-3 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold">Download</a>
-          <a href="#" class="text-sm text-sky-700 hover:underline">View sample</a>
-        </div>
-      </article>
-
-      <article class="lift bg-white border border-slate-200 rounded-2xl p-5" data-semester="sem1" data-code="BEGLA-135" data-title="English in Daily Life">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-xs uppercase tracking-wide text-slate-500">Semester 1</p>
-            <h3 class="mt-1 text-lg font-bold">BEGLA-135 • English in Daily Life</h3>
+          <div class="small">${escapeHtml(a.description||'No description')}</div>
+          <div class="actions">
+            <a class="btn view" target="_blank" rel="noopener" href="${a.preview?escapeAttr(a.preview):escapeAttr(a.file)}">Preview</a>
+            <a class="btn download" target="_blank" rel="noopener" href="${escapeAttr(a.file)}" download>Download</a>
+            <a class="btn" target="_blank" rel="noopener" href="https://github.com/">Source</a>
           </div>
-          <span class="text-xs px-2 py-1 rounded-full bg-emerald-100 text-emerald-800">AECC</span>
-        </div>
-        <p class="mt-2 text-sm text-slate-600">Solved assignment PDF for BEGLA-135.</p>
-        <div class="mt-4 flex items-center gap-3">
-          <a href="#" class="px-3 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold">Download</a>
-          <a href="#" class="text-sm text-sky-700 hover:underline">View sample</a>
-        </div>
-      </article>
-
-      <article class="lift bg-white border border-slate-200 rounded-2xl p-5" data-semester="sem2" data-code="BCOC-132" data-title="Business Laws">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-xs uppercase tracking-wide text-slate-500">Semester 2</p>
-            <h3 class="mt-1 text-lg font-bold">BCOC-132 • Business Laws</h3>
-          </div>
-          <span class="text-xs px-2 py-1 rounded-full bg-sky-100 text-sky-700">Core</span>
-        </div>
-        <p class="mt-2 text-sm text-slate-600">Solved assignment PDF for BCOC-132.</p>
-        <div class="mt-4 flex items-center gap-3">
-          <a href="#" class="px-3 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold">Download</a>
-          <a href="#" class="text-sm text-sky-700 hover:underline">View sample</a>
-        </div>
-      </article>
-
-      <article class="lift bg-white border border-slate-200 rounded-2xl p-5" data-semester="sem2" data-code="BEGLA-136" data-title="English at the Workplace">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-xs uppercase tracking-wide text-slate-500">Semester 2</p>
-            <h3 class="mt-1 text-lg font-bold">BEGLA-136 • English at the Workplace</h3>
-          </div>
-          <span class="text-xs px-2 py-1 rounded-full bg-emerald-100 text-emerald-800">AECC</span>
-        </div>
-        <p class="mt-2 text-sm text-slate-600">Solved assignment PDF for BEGLA-136.</p>
-        <div class="mt-4 flex items-center gap-3">
-          <a href="#" class="px-3 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold">Download</a>
-          <a href="#" class="text-sm text-sky-700 hover:underline">View sample</a>
-        </div>
-      </article>
-
-      <article class="lift bg-white border border-slate-200 rounded-2xl p-5" data-semester="sem3" data-code="BCOC-133" data-title="Business Mathematics & Statistics">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-xs uppercase tracking-wide text-slate-500">Semester 3</p>
-            <h3 class="mt-1 text-lg font-bold">BCOC-133 • Business Mathematics & Statistics</h3>
-          </div>
-          <span class="text-xs px-2 py-1 rounded-full bg-sky-100 text-sky-700">Core</span>
-        </div>
-        <p class="mt-2 text-sm text-slate-600">Solved assignment PDF for BCOC-133.</p>
-        <div class="mt-4 flex items-center gap-3">
-          <a href="#" class="px-3 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold">Download</a>
-          <a href="#" class="text-sm text-sky-700 hover:underline">View sample</a>
-        </div>
-      </article>
-
-      <article class="lift bg-white border border-slate-200 rounded-2xl p-5" data-semester="sem4" data-code="BCOC-134" data-title="Cost Accounting">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-xs uppercase tracking-wide text-slate-500">Semester 4</p>
-            <h3 class="mt-1 text-lg font-bold">BCOC-134 • Cost Accounting</h3>
-          </div>
-          <span class="text-xs px-2 py-1 rounded-full bg-sky-100 text-sky-700">Core</span>
-        </div>
-        <p class="mt-2 text-sm text-slate-600">Solved assignment PDF for BCOC-134.</p>
-        <div class="mt-4 flex items-center gap-3">
-          <a href="#" class="px-3 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold">Download</a>
-          <a href="#" class="text-sm text-sky-700 hover:underline">View sample</a>
-        </div>
-      </article>
-
-      <article class="lift bg-white border border-slate-200 rounded-2xl p-5" data-semester="sem5" data-code="BCOC-135" data-title="Company Law">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-xs uppercase tracking-wide text-slate-500">Semester 5</p>
-            <h3 class="mt-1 text-lg font-bold">BCOC-135 • Company Law</h3>
-          </div>
-          <span class="text-xs px-2 py-1 rounded-full bg-sky-100 text-sky-700">Core</span>
-        </div>
-        <p class="mt-2 text-sm text-slate-600">Solved assignment PDF for BCOC-135.</p>
-        <div class="mt-4 flex items-center gap-3">
-          <a href="#" class="px-3 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold">Download</a>
-          <a href="#" class="text-sm text-sky-700 hover:underline">View sample</a>
-        </div>
-      </article>
-
-      <article class="lift bg-white border border-slate-200 rounded-2xl p-5" data-semester="sem6" data-code="BCOC-136" data-title="Income Tax Law & Practice">
-        <div class="flex items-start justify-between">
-          <div>
-            <p class="text-xs uppercase tracking-wide text-slate-500">Semester 6</p>
-            <h3 class="mt-1 text-lg font-bold">BCOC-136 • Income Tax Law & Practice</h3>
-          </div>
-        <span class="text-xs px-2 py-1 rounded-full bg-sky-100 text-sky-700">Core</span>
-        </div>
-        <p class="mt-2 text-sm text-slate-600">Solved assignment PDF for BCOC-136.</p>
-        <div class="mt-4 flex items-center gap-3">
-          <a href="#" class="px-3 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold">Download</a>
-          <a href="#" class="text-sm text-sky-700 hover:underline">View sample</a>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- Papers -->
-  <section id="papers" class="bg-white border-y border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h2 class="text-2xl sm:text-3xl font-extrabold">Previous Year Question Papers</h2>
-      <p class="text-slate-600 mt-1">Add PYQs by course. Replace sample links.</p>
-      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <div class="lift bg-slate-50 rounded-2xl border border-slate-200 p-5">
-          <h3 class="font-bold">BCOC-131 • PYQ Set</h3>
-          <p class="text-sm text-slate-600 mt-1">2021 • 2022 • 2023 • 2024</p>
-          <div class="mt-3 flex gap-3">
-            <a href="#" class="text-sm text-sky-700 hover:underline">View</a>
-            <a href="#" class="text-sm text-sky-700 hover:underline">Download</a>
-          </div>
-        </div>
-        <div class="lift bg-slate-50 rounded-2xl border border-slate-200 p-5">
-          <h3 class="font-bold">BCOC-132 • PYQ Set</h3>
-          <p class="text-sm text-slate-600 mt-1">2021 • 2022 • 2023 • 2024</p>
-          <div class="mt-3 flex gap-3">
-            <a href="#" class="text-sm text-sky-700 hover:underline">View</a>
-            <a href="#" class="text-sm text-sky-700 hover:underline">Download</a>
-          </div>
-        </div>
-        <div class="lift bg-slate-50 rounded-2xl border border-slate-200 p-5">
-          <h3 class="font-bold">BCOC-133 • PYQ Set</h3>
-          <p class="text-sm text-slate-600 mt-1">2021 • 2022 • 2023 • 2024</p>
-          <div class="mt-3 flex gap-3">
-            <a href="#" class="text-sm text-sky-700 hover:underline">View</a>
-            <a href="#" class="text-sm text-sky-700 hover:underline">Download</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contribution / How to -->
-  <section id="howto" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid lg:grid-cols-2 gap-8 items-start">
-      <div class="bg-white rounded-2xl border border-slate-200 p-6">
-        <h3 class="text-xl font-extrabold">How to add your own links</h3>
-        <ol class="mt-3 text-sm text-slate-700 list-decimal pl-5 space-y-2">
-          <li>Upload your PDF to <span class="font-semibold">Google Drive</span> → get share link (Anyone with the link can view).</li>
-          <li>In the <span class="font-semibold">Solved Assignments</span> cards above, replace the <code class="bg-slate-100 px-1.5 py-0.5 rounded">href="#"</code> of <em>Download</em>/<em>View</em> with your Drive URL.</li>
-          <li>To add a new course, copy any card block, change <code>data-semester</code>, <code>data-code</code>, <code>data-title</code> and the text inside the heading.</li>
-          <li>Search/filters will work automatically based on <code>data-*</code> attributes.</li>
-        </ol>
-      </div>
-
-      <div id="contribute" class="bg-sky-50 rounded-2xl border border-sky-200 p-6">
-        <h3 class="text-xl font-extrabold">Contribute & Request</h3>
-        <p class="mt-2 text-sm text-slate-700">Have a missing course or a better solution? Send your PDF/link.</p>
-        <div class="mt-4 flex flex-wrap gap-3">
-          <a href="mailto:bcomstreet@gmail.com?subject=Bcomstreet%20Contribution" class="px-4 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold lift">Email PDF</a>
-          <a href="https://wa.me/0000000000" class="px-4 py-2 rounded-xl bg-white border border-slate-300 text-sm font-semibold lift">WhatsApp</a>
-          <a href="#" class="px-4 py-2 rounded-xl bg-white border border-slate-300 text-sm font-semibold lift">Google Form</a>
-        </div>
-        <p class="mt-3 text-xs text-slate-600">Replace the email/WhatsApp number/Form link with your own.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQs -->
-  <section id="faqs" class="bg-white border-y border-slate-200">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h2 class="text-2xl sm:text-3xl font-extrabold">FAQs</h2>
-      <div class="mt-6 divide-y divide-slate-200">
-        <details class="group py-4">
-          <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span class="font-semibold">Kya ye website hamesha free rahegi?</span>
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-sm text-slate-700">Haan. Ye site free hosting (GitHub Pages/Netlify) par chalegi, isliye koi monthly cost nahin.</p>
-        </details>
-        <details class="group py-4">
-          <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span class="font-semibold">Assignments ka source kya hai?</span>
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-sm text-slate-700">Community contributions + public resources. Hum IGNOU se affiliated nahin hain.</p>
-        </details>
-        <details class="group py-4">
-          <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span class="font   modal.style.display='flex';
-      if(item){
-        editing = item;
-        m_code.value = item.code; m_title.value = item.title; m_session.value = item.session; m_medium.value = item.medium; m_url.value = item.url || '';
-      } else {
-        editing = null;
-        m_code.value='';m_title.value='';m_session.value='2024-25';m_url.value='';m_medium.value='hindi';
+        `;
+        listEl.appendChild(card);
       }
     }
-    addBtn.onclick = ()=> openModal(null);
-    cancel.onclick = ()=> modal.style.display='none';
 
-    save.onclick = ()=>{
-      const code = m_code.value.trim();
-      if(!code){alert('Course code zaroori hai');return}
-      const entry = {code, title:m_title.value.trim() || '-', session:m_session.value.trim()||'2024-25', medium:m_medium.value, url:m_url.value.trim()};
-      if(editing){
-        // update
-        const idx = assignments.indexOf(editing);
-        if(idx>=0) assignments[idx] = entry;
-      } else {
-        assignments.push(entry);
-      }
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(assignments));
-      modal.style.display='none';
-      render();
-    }
+    // Basic escaping
+    function escapeHtml(s){ if(!s) return ''; return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') }
+    function escapeAttr(s){ if(!s) return ''; return s.replaceAll('"','%22') }
 
-    // Export JSON
-    document.getElementById('exportBtn').onclick = ()=>{
-      const blob = new Blob([JSON.stringify(assignments, null, 2)], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'assignments.json'; document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(url);
-    }
+    // Wire up events
+    searchEl.addEventListener('input', renderList);
+    fCourse.addEventListener('change', renderList);
+    fSession.addEventListener('change', renderList);
+    fYear.addEventListener('change', renderList);
+    document.getElementById('clearFilters').addEventListener('click', ()=>{searchEl.value=''; fCourse.value=''; fSession.value=''; fYear.value=''; renderList()});
 
-    // events
-    [sessionSelect, mediumSelect].forEach(el=>el.addEventListener('change', render));
-    search.addEventListener('input', ()=> setTimeout(render, 100));
+    // Admin modal logic
+    const modal = document.getElementById('modal');
+    document.getElementById('adminBtn').addEventListener('click', ()=>{
+      document.getElementById('jsonInput').value = JSON.stringify(assignments, null, 2);
+      modal.classList.add('open');
+    });
+    document.getElementById('closeModal').addEventListener('click', ()=> modal.classList.remove('open'));
+    document.getElementById('loadJson').addEventListener('click', ()=>{
+      const v = document.getElementById('jsonInput').value;
+      try{
+        const parsed = JSON.parse(v);
+        if(!Array.isArray(parsed)) throw new Error('JSON must be an array of assignment objects');
+        assignments = parsed.map(p=>({id: p.id||Math.random().toString(36).slice(2,9), title:p.title||'',course:p.course||'',year:p.year||'',session:p.session||'',description:p.description||'',file:p.file||'',preview:p.preview||''}));
+        populateFilters(); renderList(); modal.classList.remove('open');
+        alert('Loaded assignments into the page. To make permanent, copy this JSON into your repo or update index.html on GitHub.');
+      }catch(err){ alert('Invalid JSON: '+err.message) }
+    });
 
-    // initial
-    render();
-  </script></body>
-</html>                                                  
+    // Initial render
+    populateFilters(); renderList();
 
-
-
-
-
-              <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bcomgali - IGNOU B.Com Solved Assignments</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
+    // Optional: allow index.html to fetch assignments.json if you choose to host it separately
+    (async function tryFetchAssignments(){
+      try{
+        const res = await fetch('assignments.json');
+        if(res.ok){
+          const data = await res.json();
+          if(Array.isArray(data) && data.length>0){ assignments = data; populateFilters(); renderList(); }
         }
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-        nav {
-            background-color: #34495e;
-            display: flex;
-            justify-content: center;
-        }
-        nav a {
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
-        }
-        nav a:hover {
-            background-color: #1abc9c;
-        }
-        .container {
-            padding: 20px;
-        }
-        .assignment {
-            background-color: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
-        }
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
+      }catch(e){ /* ignore */ }
+    })();
 
-<header>
-    <h1>Bcomgali</h1>
-    <p>IGNOU B.Com Solved Assignments</p>
-</header>
-
-<nav>
-    <a href="#">Home</a>
-    <a href="#">Assignments</a>
-    <a href="#">Contact</a>
-</nav>
-
-<div class="container">
-    <div class="assignment">
-        <h2>BCOC 131 - Business Organisation and Management</h2>
-        <p><a href="assignments/bcoc131.pdf" target="_blank">Download Solved Assignment</a></p>
-    </div>
-    <div class="assignment">
-        <h2>BCOC 132 - Business Law</h2>
-        <p><a href="assignments/bcoc132.pdf" target="_blank">Download Solved Assignment</a></p>
-    </div>
-    <div class="assignment">
-        <h2>BCOC 133 - Business Mathematics and Statistics</h2>
-        <p><a href="assignments/bcoc133.pdf" target="_blank">Download Solved Assignment</a></p>
-    </div>
-</div>
-
-<footer>
-    <p>&copy; 2025 Bcomgali | Made with ❤️ for IGNOU Students</p>
-</footer>
-
+  </script>
 </body>
-            </html>
-              
+</html>
