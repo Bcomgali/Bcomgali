@@ -349,120 +349,213 @@
     const semesterFilter = document.getElementById('semesterFilter');
     const cards = Array.from(document.querySelectorAll('#cards article'
 
-<!DOCTYPE html>
+
+
+     <!doctype html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bcomstreet - IGNOU BCOMG Solved Assignments</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IGNOU Solved Assignments - Demo</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f8f9fa;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    h1 {
-      margin-top: 30px;
-      color: #333;
-    }
-    p {
-      color: #666;
-    }
-    .box {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      width: 300px;
-      text-align: center;
-      margin-top: 20px;
-    }
-    .link {
-      display: block;
-      margin: 10px 0;
-      padding: 10px;
-      background: #007bff;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .link:hover {
-      background: #0056b3;
-    }
-    .assignments {
-      display: none;
-      margin-top: 20px;
-      text-align: left;
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 300px;
-    }
-    .assignments h3 {
-      margin-bottom: 10px;
-    }
-    .assignments a {
-      display: block;
-      color: #007bff;
-      margin-bottom: 5px;
-      text-decoration: none;
-    }
-    .assignments a:hover {
-      text-decoration: underline;
-    }
+    :root{--accent:#2b6cb0;--muted:#666}
+    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0;padding:20px;background:#f7f9fc;color:#111}
+    header{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    h1{margin:0 0 8px 0;font-size:20px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap}
+    select,input[type=text]{padding:8px;border:1px solid #d7dde6;border-radius:6px}
+    label{font-size:13px;color:var(--muted)}
+    .chip{background:#fff;border:1px solid #e3e8ef;padding:8px;border-radius:8px}
+    table{width:100%;border-collapse:collapse;margin-top:18px;background:#fff;border-radius:8px;overflow:hidden}
+    th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #f1f5f9}
+    th{background:#fff;font-weight:600}
+    .actions{display:flex;gap:8px}
+    .btn{padding:8px 10px;border-radius:6px;border:none;background:var(--accent);color:white;cursor:pointer}
+    .btn.secondary{background:#4a5568}
+    .small{padding:6px 8px;font-size:13px}
+    .muted{color:var(--muted);font-size:13px}
+    @media (max-width:700px){table,thead,tbody,tr,th,td{display:block}thead{display:none}tr{margin-bottom:12px;border-radius:8px;border:1px solid #e6eef8;padding:8px}td{border:none;padding:6px 2px}}
   </style>
 </head>
 <body>
+  <header>
+    <div>
+      <h1>IGNOU Solved Assignments — Demo</h1>
+      <div class="muted">Session / Medium ke hisaab se assignments filter karein. (Static demo — GitHub Pages par seedha host karein)</div>
+    </div>
+  </header>  <section style="margin-top:14px" class="chip">
+    <div class="controls">
+      <div>
+        <label>Session</label><br>
+        <select id="sessionSelect">
+          <option value="all">All</option>
+        </select>
+      </div>
+      <div>
+        <label>Medium</label><br>
+        <select id="mediumSelect">
+          <option value="all">All</option>
+          <option value="hindi">Hindi</option>
+          <option value="english">English</option>
+        </select>
+      </div>
+      <div>
+        <label>Search (code / title)</label><br>
+        <input id="search" type="text" placeholder="Bcom 131, financial accounting..." />
+      </div>
+      <div style="align-self:end">
+        <button class="btn small" id="addBtn">+ Add / Edit</button>
+      </div>
+      <div style="align-self:end">
+        <button class="btn small secondary" id="exportBtn">Export JSON</button>
+      </div>
+    </div>
+  </section>  <main>
+    <table id="coursesTable">
+      <thead>
+        <tr><th>Code</th><th>Title</th><th>Session</th><th>Medium</th><th>File</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>  <!-- modal (simple) -->  <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);align-items:center;justify-content:center">
+    <div style="background:#fff;padding:18px;border-radius:10px;width:min(520px,95%);box-shadow:0 8px 30px rgba(0,0,0,0.12)">
+      <h3 style="margin-top:0">Add / Edit Assignment</h3>
+      <div style="display:grid;gap:8px">
+        <input id="m_code" placeholder="Course code (eg. BCOC 131)" />
+        <input id="m_title" placeholder="Course title" />
+        <input id="m_session" placeholder="Session (eg. 2024-25)" />
+        <select id="m_medium"><option value="hindi">Hindi</option><option value="english">English</option></select>
+        <input id="m_url" placeholder="File URL (optional) - paste GitHub raw link or any PDF link" />
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn secondary" id="cancel">Cancel</button>
+          <button class="btn" id="save">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>  <script>
+    // Sample initial data (based on your photo)
+    const sample = [
+      {code:'BCOC 131', title:'Financial Accounting', session:'2024-25', medium:'hindi', url:''},
+      {code:'BCOC 132', title:'Business Organisation & Management', session:'2024-25', medium:'hindi', url:''},
+      {code:'BCOC 133', title:'Business Law', session:'2024-25', medium:'hindi', url:''},
+      {code:'BCOC 134', title:'Business Statistics & Mathematics', session:'2024-25', medium:'hindi', url:''},
+      {code:'BEGAE 182', title:'(Sample) English elective', session:'2024-25', medium:'hindi', url:''},
+      {code:'BECOLA 135', title:'(Sample) Course 135', session:'2024-25', medium:'hindi', url:''},
+      {code:'BA VAE 181', title:'(Sample) VAE', session:'2024-25', medium:'hindi', url:''},
+      {code:'BHDLA 136', title:'(Sample) Course 136', session:'2024-25', medium:'hindi', url:''}
+    ];
 
-  <h1>Bcomstreet</h1>
-  <p>IGNOU BCOMG Free Solved Assignments</p>
+    // load from localStorage or use sample
+    const STORAGE_KEY = 'ignou_assignments_v1';
+    let assignments = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || sample;
 
-  <div class="box">
-    <div class="link" onclick="showAssignments('year1')">1st Year Solved Assignments</div>
-    <div class="link" onclick="showAssignments('year2')">2nd Year Solved Assignments</div>
-    <div class="link" onclick="showAssignments('year3')">3rd Year Solved Assignments</div>
-  </div>
+    const sessionSelect = document.getElementById('sessionSelect');
+    const mediumSelect = document.getElementById('mediumSelect');
+    const search = document.getElementById('search');
+    const tbody = document.querySelector('#coursesTable tbody');
 
-  <div id="year1" class="assignments">
-    <h3>1st Year Solved Assignments</h3>
-    <a href="#">BEGLA-135</a>
-    <a href="#">BCOC-131</a>
-    <a href="#">BCOC-132</a>
-  </div>
-
-  <div id="year2" class="assignments">
-    <h3>2nd Year Solved Assignments</h3>
-    <a href="#">BCOC-133</a>
-    <a href="#">BCOC-134</a>
-    <a href="#">BCOC-135</a>
-  </div>
-
-  <div id="year3" class="assignments">
-    <h3>3rd Year Solved Assignments</h3>
-    <a href="#">BCOC-136</a>
-    <a href="#">BCOC-137</a>
-    <a href="#">BCOC-138</a>
-  </div>
-
-  <script>
-    function showAssignments(yearId) {
-      // Hide all sections
-      document.querySelectorAll('.assignments').forEach(div => {
-        div.style.display = 'none';
-      });
-      // Show the selected year
-      document.getElementById(yearId).style.display = 'block';
-      // Scroll to assignments
-      document.getElementById(yearId).scrollIntoView({ behavior: 'smooth' });
+    function uniqueSessions(){
+      const s = Array.from(new Set(assignments.map(a=>a.session))).sort();
+      return s;
     }
-  </script>
 
-</body>
-</html>
-                                                       
+    function rebuildSessionOptions(){
+      const cur = sessionSelect.value;
+      sessionSelect.innerHTML = '<option value="all">All</option>' + uniqueSessions().map(x=>`<option value="${x}">${x}</option>`).join('');
+      if([...sessionSelect.options].some(o=>o.value===cur)) sessionSelect.value = cur;
+    }
+
+    function render(){
+      rebuildSessionOptions();
+      const q = search.value.trim().toLowerCase();
+      const s = sessionSelect.value;
+      const m = mediumSelect.value;
+      tbody.innerHTML = '';
+      const filtered = assignments.filter(item=>{
+        if(s!=='all' && item.session!==s) return false;
+        if(m!=='all' && item.medium!==m) return false;
+        if(!q) return true;
+        return (item.code + ' ' + item.title).toLowerCase().includes(q);
+      });
+      if(filtered.length===0){
+        tbody.innerHTML = '<tr><td colspan="5" class="muted">Koi assignment nahi mila.</td></tr>';
+        return;
+      }
+      for(const a of filtered){
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${a.code}</td><td>${a.title}</td><td>${a.session}</td><td>${a.medium}</td>`;
+        const td = document.createElement('td');
+        const actions = document.createElement('div'); actions.className='actions';
+        if(a.url){
+          const link = document.createElement('a'); link.href = a.url; link.target='_blank'; link.className='btn small'; link.textContent='Open';
+          actions.appendChild(link);
+        } else {
+          const no = document.createElement('span'); no.textContent='No file'; no.className='muted small'; actions.appendChild(no);
+        }
+        const edit = document.createElement('button'); edit.className='btn small secondary'; edit.textContent='Edit';
+        edit.addEventListener('click',()=> openModal(a));
+        actions.appendChild(edit);
+        td.appendChild(actions);
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      }
+    }
+
+    // modal handling
+    const modal = document.getElementById('modal');
+    const addBtn = document.getElementById('addBtn');
+    const cancel = document.getElementById('cancel');
+    const save = document.getElementById('save');
+    const m_code = document.getElementById('m_code');
+    const m_title = document.getElementById('m_title');
+    const m_session = document.getElementById('m_session');
+    const m_medium = document.getElementById('m_medium');
+    const m_url = document.getElementById('m_url');
+    let editing = null;
+
+    function openModal(item){
+      modal.style.display='flex';
+      if(item){
+        editing = item;
+        m_code.value = item.code; m_title.value = item.title; m_session.value = item.session; m_medium.value = item.medium; m_url.value = item.url || '';
+      } else {
+        editing = null;
+        m_code.value='';m_title.value='';m_session.value='2024-25';m_url.value='';m_medium.value='hindi';
+      }
+    }
+    addBtn.onclick = ()=> openModal(null);
+    cancel.onclick = ()=> modal.style.display='none';
+
+    save.onclick = ()=>{
+      const code = m_code.value.trim();
+      if(!code){alert('Course code zaroori hai');return}
+      const entry = {code, title:m_title.value.trim() || '-', session:m_session.value.trim()||'2024-25', medium:m_medium.value, url:m_url.value.trim()};
+      if(editing){
+        // update
+        const idx = assignments.indexOf(editing);
+        if(idx>=0) assignments[idx] = entry;
+      } else {
+        assignments.push(entry);
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(assignments));
+      modal.style.display='none';
+      render();
+    }
+
+    // Export JSON
+    document.getElementById('exportBtn').onclick = ()=>{
+      const blob = new Blob([JSON.stringify(assignments, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'assignments.json'; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // events
+    [sessionSelect, mediumSelect].forEach(el=>el.addEventListener('change', render));
+    search.addEventListener('input', ()=> setTimeout(render, 100));
+
+    // initial
+    render();
+  </script></body>
+</html>                                                  
