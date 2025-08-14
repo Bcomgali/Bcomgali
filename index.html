@@ -348,3 +348,103 @@
     const search = document.getElementById('search');
     const semesterFilter = document.getElementById('semesterFilter');
     const cards = Array.from(document.querySelectorAll('#cards article'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bcomstreet - IGNOU BCOMG Solved Assignments</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .link {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .link:hover {
+      background: #0056b3;
+    }
+    .assignments {
+      display: none;
+      margin-top: 20px;
+      text-align: left;
+    }
+    .assignments h3 {
+      margin-bottom: 10px;
+    }
+    .assignments a {
+      display: block;
+      color: #007bff;
+      margin-bottom: 5px;
+      text-decoration: none;
+    }
+    .assignments a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Bcomstreet</h1>
+  <p>IGNOU BCOMG Free Solved Assignments</p>
+
+  <div class="box">
+    <a href="#" class="link" onclick="showAssignments('year1')">1st Year Solved Assignments</a>
+    <a href="#" class="link" onclick="showAssignments('year2')">2nd Year Solved Assignments</a>
+    <a href="#" class="link" onclick="showAssignments('year3')">3rd Year Solved Assignments</a>
+  </div>
+
+  <div id="year1" class="assignments">
+    <h3>1st Year Solved Assignments</h3>
+    <a href="#">BEGLA-135</a>
+    <a href="#">BCOC-131</a>
+    <a href="#">BCOC-132</a>
+  </div>
+
+  <div id="year2" class="assignments">
+    <h3>2nd Year Solved Assignments</h3>
+    <a href="#">BCOC-133</a>
+    <a href="#">BCOC-134</a>
+    <a href="#">BCOC-135</a>
+  </div>
+
+  <div id="year3" class="assignments">
+    <h3>3rd Year Solved Assignments</h3>
+    <a href="#">BCOC-136</a>
+    <a href="#">BCOC-137</a>
+    <a href="#">BCOC-138</a>
+  </div>
+
+  <script>
+    function showAssignments(yearId) {
+      document.querySelectorAll('.assignments').forEach(div => {
+        div.style.display = 'none';
+      });
+      document.getElementById(yearId).style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
